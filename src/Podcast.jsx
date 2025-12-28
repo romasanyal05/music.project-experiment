@@ -2,24 +2,24 @@ import { useEffect, useState } from "react";
 import { supabase } from "./supabaseClient";
 import Waveform from "./waveform";
 
-function MusicPlayer() {
-  const [tracks, setTracks] = useState([]);
+function Podcast() {
+  const [episodes, setEpisodes] = useState([]);
   const [index, setIndex] = useState(null);
 
   useEffect(() => {
     supabase
-      .from("tracks")
+      .from("episodes")
       .select("*")
-      .then(({ data }) => setTracks(data || []));
+      .then(({ data }) => setEpisodes(data || []));
   }, []);
 
   return (
     <div style={{ padding: 20 }}>
-      <h2>🎵 Music Tracks</h2>
+      <h2>🎙 Podcast Episodes</h2>
 
-      {tracks.map((t, i) => (
+      {episodes.map((e, i) => (
         <div
-          key={t.id}
+          key={e.id}
           onClick={() => setIndex(i)}
           style={{
             cursor: "pointer",
@@ -27,26 +27,28 @@ function MusicPlayer() {
             color: index === i ? "#00ffe1" : "#fff",
           }}
         >
-          ▶ Track {i + 1}
+          ▶ Episode {i + 1}
         </div>
       ))}
 
       {index !== null && (
         <Waveform
-          playlist={tracks}
+          playlist={episodes}
           currentIndex={index}
           onNext={() =>
-            setIndex((i) => (i + 1) % tracks.length)
+            setIndex((i) => (i + 1) % episodes.length)
           }
           onPrev={() =>
             setIndex((i) =>
-              i === 0 ? tracks.length - 1 : i - 1)
+              i === 0 ? episodes.length - 1 : i - 1
+            )
           }
-        onBack={() => setIndex(null)}   //
+          onBack={() => setIndex(null)} //
+          BACK
         />
       )}
     </div>
   );
 }
 
-export default MusicPlayer;
+export default Podcast;
