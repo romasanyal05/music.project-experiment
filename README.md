@@ -47,8 +47,27 @@ music.project-experiment/ ├── public/ │
 ├── tailwind.config.js 
 └── vite.config.js
 
----
----
+## 🖼 Screenshots
+
+### 🔑 Login Page
+![Login Page](screenshot login)
+
+### 🎵 Music Player
+![Music Player](screenshot MusicPlayer Track+ MusicPlayer waveform)
+
+### 🎙 Podcast Player
+![Podcast Player](screenshot Podcast episode+ Podcast waveform)
+
+### 📊 Dashboard View
+![Dashboard](screenshots dashboard)
+
+
+
+## ⚙️ Setup Instructions
+
+1. Clone the repository:
+   ```bash
+   git clone <YOUR_GITHUB_REPO_URL>
 
 ## 🚀 Getting Started
 
