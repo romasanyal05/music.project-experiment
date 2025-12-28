@@ -1,111 +1,91 @@
-# 🎵 Music Streaming Web App (Experiment)
+🎵 Music Streaming Web App (Digital Media Player)
+A modern Music & Podcast Streaming Web Application built with React + Supabase, featuring authentication, playlists, podcasts, and real-time audio visualisation.
 
-A modern **React-based Music & Podcast Streaming Web App** featuring
-neon rectangular audio waveforms, smooth playback controls, and a
-Spotify-style mini player experience.
-
-This project is built as an **experimental digital media player**
-focusing on audio visualization, UI polish, and clean React architecture.
-
----
-
-## ✨ Features
-
-- 🎧 Music Tracks Player
-- 🎙 Podcast Episodes Player
-- 🔊 Neon Rectangular Audio Waveforms (Canvas-based)
-- ⏯ Play / Pause / Next / Previous Controls
-- ⏱ Real-time Audio Duration Display
-- 🟢 Mini Player Style Interface
-- ⚡ Fast build using Vite
-- 🎨 Styled with Tailwind CSS
-- 🔐 Supabase-ready (Auth + DB integration)
-
----
-
-## 🧠 Tech Stack
-
-- **Frontend:** React + Vite
-- **Styling:** Tailwind CSS
-- **Audio API:** Web Audio API
-- **Visualization:** Canvas API
-- **Backend (Optional):** Supabase
-- **Version Control:** Git & GitHub
-- ** Deployment:** Vercel
-
----
-
-## 📂 Folder Structure
-music.project-experiment/ ├── public/ │   
-└── music/              # Audio files (MP3) 
-├── src/ │   ├── components/ 
-│   ├── MusicPlayer.jsx     # Music player logic │   ├── Podcast.jsx         
-# Podcast player logic │   ├── waveform.jsx      
-  # Neon audio waveform │   ├── Dashboard.jsx       
-# Dashboard UI │   └── App.jsx 
-├── README.md 
-├── package.json 
-├── tailwind.config.js 
-└── vite.config.js
-
-## 🖼 Screenshots
-
-### 🔑 Login Page
-![Login Page](screenshot login)
-
-### 🎵 Music Player
-![Music Player](screenshot MusicPlayer Track+ MusicPlayer waveform)
-
-### 🎙 Podcast Player
-![Podcast Player](screenshot Podcast episode+ Podcast waveform)
-
-### 📊 Dashboard View
-![Dashboard](screenshots dashboard)
-
-
-
-## ⚙️ Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone <YOUR_GITHUB_REPO_URL>
-
-## 🚀 Getting Started
-
-### 1️⃣ Clone the repository
-
-git clone https://github.com/romasanyal05/music.project-experiment.git
-2️⃣ Install dependencies
-npm install
-3️⃣ Run the project
-npm run dev
-📸 Screenshots
-Screenshots of the following features are included:
-Music Tracks List
-Podcast Episodes List
-Neon Rectangular Waveform
-Mini Player Controls
-Dashboard Overview
-📁 Screenshots are stored in the main folder.
-🧪 Project Status
-✅ Core Audio Player Complete
-✅ Waveform Visualization Complete
-✅ Music & Podcast Navigation Working
-🚧 Admin Dashboard & Upload Panel (Optional – Future Scope)
-
-## 🚀 Live Demo
-🔗 Vercel Deployment:  
+🚀 Live Demo
+🔗 Vercel Deployment
 https://music-project-experiment.vercel.app
 
-📌 Future Enhancements (Optional)
+✨ Features
+🔐 Authentication
+Email & Password login using Supabase Auth
+Secure session handling
+Logout functionality
 
-Admin Dashboard
-Audio Upload Panel
-User Roles & Permissions
-Playlist Management
-Mobile UI Optimization
+🎶 Music Player
+Fetches music tracks from Supabase database
+Play / Pause functionality
+Next & Previous track navigation
+Neon rectangular audio waveform visualisation
+Real-time audio duration display
+
+🎙 Podcast Player
+Podcast episode listing from Supabase
+Independent playback for episodes
+Shared waveform visualiser for podcasts
+Smooth switching between episodes
+
+🌊 Audio Visualisation
+Custom Canvas-based waveform
+Beat-responsive rectangular bars
+Neon glow effect
+Real-time analyser using Web Audio API
+📱 UI / UX
+Clean, minimal dashboard layout
+Responsive design
+Separate sections for Music & Podcasts
+Professional dark theme
+
+🛠 Tech Stack
+Frontend: React (Vite)
+Backend: Supabase (Database + Auth)
+Audio: Web Audio API + Canvas
+Deployment: Vercel
+Version Control: Git & GitHub
+
+📂 Project Structure
+src/
+├── App.jsx
+├── Auth.jsx
+├── MusicPlayer.jsx
+├── Podcast.jsx
+├── waveform.jsx
+├── supabaseClient.js
+└── assets/
+
+📸 Screenshots
+Screenshots added directly in GitHub repository
+(Login Page, Music Player, Podcast Player, Waveform Visuals)
+
+⚙️ Environment Variables
+
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+🧪 Local Development
+npm install
+npm run dev
+
+App runs on:
+http://localhost:5173
+
+📌 Deployment
+Deployed using Vercel
+Environment variables configured in Vercel Dashboard
+Auto-deploy enabled on GitHub push
+
+🎯 Project Status
+✅ Core features completed
+✅ Music & Podcast playback working
+✅ Audio visualisation implemented
+🚧 Advanced dashboard & admin panel (future enhancement)
+
 👩‍💻 Author
 Garima Bhushan
+Music Streaming Web App – 2025
+
+📜 License
+This project is created for educational & learning purposes.
+
 GitHub: https://github.com/romasanyal05
 ⭐ Note
 This project is created for learning, experimentation, and portfolio showcase.
