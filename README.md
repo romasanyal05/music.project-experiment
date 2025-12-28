@@ -31,6 +31,7 @@ focusing on audio visualization, UI polish, and clean React architecture.
 - **Visualization:** Canvas API
 - **Backend (Optional):** Supabase
 - **Version Control:** Git & GitHub
+- ** Deployment:** Vercel
 
 ---
 
@@ -85,13 +86,19 @@ Podcast Episodes List
 Neon Rectangular Waveform
 Mini Player Controls
 Dashboard Overview
-📁 Screenshots are stored in the screenshots/ folder.
+📁 Screenshots are stored in the main folder.
 🧪 Project Status
 ✅ Core Audio Player Complete
 ✅ Waveform Visualization Complete
 ✅ Music & Podcast Navigation Working
 🚧 Admin Dashboard & Upload Panel (Optional – Future Scope)
+
+## 🚀 Live Demo
+🔗 Vercel Deployment:  
+https://music-project-experiment.vercel.app
+
 📌 Future Enhancements (Optional)
+
 Admin Dashboard
 Audio Upload Panel
 User Roles & Permissions
