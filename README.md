@@ -67,6 +67,10 @@ Neon Rectangular Waveform
 Mini Player Controls
 Dashboard Overview
 📁 Screenshots are stored in the screenshots/ folder.
+
+🎨 Dynamic Visual Posters  
+The player integrates Supabase-powered poster rotation, displaying up to 16 curated posters per track or podcast episode.  
+Posters change automatically every 10 seconds and reset with each new audio selection, enhancing the overall audiovisual experience.
 🧪 Project Status
 ✅ Core Audio Player Complete
 ✅ Waveform Visualization Complete
@@ -82,4 +86,4 @@ Mobile UI Optimization
 Garima Bhushan
 GitHub: https://github.com/romasanyal05
 ⭐ Note
-This project is created for learning, experimentation, and portfolio showcase.
+This project is created for learning, experimentation and portfolio showcase.
