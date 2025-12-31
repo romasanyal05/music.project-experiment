@@ -56,6 +56,10 @@ src/
 Screenshots added directly in GitHub repository
 (Login Page, Music Player, Podcast Player, Waveform Visuals)
 
+🎨 Dynamic Visual Posters  
+The player integrates Supabase-powered poster rotation, displaying up to 16 curated posters per track or podcast episode.  
+Posters change automatically every 10 seconds and reset with each new audio selection, enhancing the overall audiovisual experience.
+
 ⚙️ Environment Variables
 VITE_SUPABASE_URL=https://lhdoyqvpcsqllvnzmtnq.supabase.co
 VITE_SUPABASE_ANON_KEY=sb_publishable_wN-84lNJ8Et5CX3ZAga1Iw_8iJBOEIW
@@ -87,4 +91,4 @@ This project is created for educational & learning purposes.
 
 GitHub: https://github.com/romasanyal05
 ⭐ Note
-This project is created for learning, experimentation, and portfolio showcase.
+This project is created for learning, experimentation and portfolio showcase.
