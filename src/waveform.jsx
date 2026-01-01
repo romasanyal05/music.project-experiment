@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { supabase }from "./supabaseClient";
 
 export default function Waveform({
   playlist = [],
@@ -11,12 +12,53 @@ export default function Waveform({
   const audioRef = useRef(null);
   const analyserRef = useRef(null);
   const rafRef = useRef(null);
-  const hueRef = useRef(180); // 🌈 COLOR ROTATION
+  const posterTimerRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [time, setTime] = useState("00:00 / 00:00");
+  const [posters, setPosters] = useState([]);
+  const [posterIndex, setPosterIndex] = useState(0);
+  const [posterUrl, setPosterUrl] = useState("");
 
   const track = playlist[currentIndex];
+
+  /* ---------------- FETCH POSTERS ---------------- */
+  useEffect(() => {
+    async function loadPosters() {
+      console.log("POSTER FETCH STARTED");
+      const { data, error } = await supabase
+        .from("posters")
+        .select("image_url")
+        .order("id");
+
+      if (!error && Array.isArray(data)) {
+        setPosters(data.slice(0, 16)); // max 16 posters
+      }
+    }
+    loadPosters();
+  }, []);
+
+  /* ---------------- POSTER ROTATION (10s) ---------------- */
+  useEffect(() => {
+  if (!posters || posters.length === 0) return;
+
+  // set first poster safely
+  setPosterUrl(posters[0].image_url);
+
+  posterTimerRef.current = setInterval(() => {
+    setPosterIndex((prev) => {
+      const next = (prev + 1) % posters.length;
+      setPosterUrl(posters[next].image_url);
+      return next;
+    });
+  }, 10000); // 10 seconds
+
+  return () => {
+    if (posterTimerRef.current) {
+      clearInterval(posterTimerRef.current);
+    }
+  };
+}, [posters]);
 
   /* ---------------- AUDIO SETUP ---------------- */
   useEffect(() => {
@@ -28,15 +70,14 @@ export default function Waveform({
 
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     const ctx = new AudioCtx();
-
     const analyser = ctx.createAnalyser();
     analyser.fftSize = 256;
 
     const src = ctx.createMediaElementSource(audio);
     src.connect(analyser);
     analyser.connect(ctx.destination);
-
     analyserRef.current = analyser;
+
     audio.onended = onNext;
 
     audio.addEventListener("timeupdate", () => {
@@ -56,7 +97,7 @@ export default function Waveform({
     };
   }, [track]);
 
-  /* ---------------- DRAW NEON RECT BARS ---------------- */
+  /* ---------------- WAVEFORM DRAW ---------------- */
   const draw = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -68,32 +109,23 @@ export default function Waveform({
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const bars = 140;
+    const bars = 120;
     const barWidth = canvas.width / bars;
-
-    hueRef.current += 0.5; // 🌈 AUTO COLOR CHANGE
-    const baseHue = hueRef.current;
 
     for (let i = 0; i < bars; i++) {
       const v = data[i] / 255;
-      const h = v * canvas.height * 0.9;
+      const h = v * canvas.height * 0.85;
 
-      const x = i * barWidth;
-      const y = canvas.height - h;
-
-      const hue = (baseHue + i * 1.5) % 360;
-      ctx.fillStyle = `hsl(${hue}, 100%, ${55 + v * 25}%)`;
-
-      ctx.shadowBlur = 30 + v * 40;
-      ctx.shadowColor = `hsl(${hue}, 100%, 70%)`;
-
-      ctx.fillRect(x, y, barWidth - 2, h);
+      ctx.fillStyle = "#5ffcff";
+      ctx.shadowBlur = 20;
+      ctx.shadowColor = "#5ffcff";
+      ctx.fillRect(i * barWidth, canvas.height - h, barWidth - 2, h);
     }
 
     rafRef.current = requestAnimationFrame(draw);
   };
 
-  /* ---------------- CONTROLS ---------------- */
+  /* ---------------- PLAY / PAUSE ---------------- */
   const togglePlay = async () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -111,20 +143,23 @@ export default function Waveform({
 
   /* ---------------- UI ---------------- */
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "radial-gradient(circle at top,#0a2540,#020b13)",
-        display: "flex",
-        flexDirection: "column",
-        zIndex: 999
-      }}
-    >
+    <div style={{ position: "fixed", inset: 0, color: "#fff" }}>
+      {/* BACKGROUND POSTER */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: posterUrl ? `url(${posterUrl})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: -1
+        }}
+      />
+
       {/* TOP BAR */}
       <div style={{ padding: 16, display: "flex", alignItems: "center" }}>
         <button onClick={onBack} style={btn}>← Back</button>
-        <div style={{ marginLeft: 20, color: "#9ffcff", fontWeight: 600 }}>
+        <div style={{ marginLeft: 20, fontWeight: 700, fontSize: 18 }}>
           {track?.title || "Now Playing"}
         </div>
       </div>
@@ -133,20 +168,19 @@ export default function Waveform({
       <canvas
         ref={canvasRef}
         width={window.innerWidth}
-        height={window.innerHeight * 0.7}
-        style={{ flex: 1 }}
+        height={window.innerHeight * 0.6}
       />
 
       {/* CONTROLS */}
-      <div style={{ padding: 20, textAlign: "center" }}>
-        <div style={{ display: "flex", justifyContent: "center", gap: 18 }}>
+      <div style={{ textAlign: "center", paddingBottom: 20 }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: 16 }}>
           <button onClick={onPrev} style={btn}>⏮</button>
           <button onClick={togglePlay} style={mainBtn}>
             {isPlaying ? "⏸" : "▶"}
           </button>
           <button onClick={onNext} style={btn}>⏭</button>
         </div>
-        <div style={{ marginTop: 8, color: "#b6ecff" }}>{time}</div>
+        <div style={{ marginTop: 6 }}>{time}</div>
       </div>
     </div>
   );
@@ -154,7 +188,7 @@ export default function Waveform({
 
 /* ---------------- STYLES ---------------- */
 const btn = {
-  background: "transparent",
+  background: "rgba(0,0,0,0.5)",
   border: "1px solid #5ffcff",
   color: "#5ffcff",
   padding: "8px 16px",
@@ -165,6 +199,5 @@ const btn = {
 const mainBtn = {
   ...btn,
   fontSize: 22,
-  padding: "12px 26px",
-  boxShadow: "0 0 30px #5ffcff"
+  padding: "12px 28px"
 };
